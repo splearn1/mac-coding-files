@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // ~~~~~ PROMISES ~~~~~ \\
+		const someAPIRequest = {
+			success: Math.random() < 0.5,
+			data: 'Here is your data',
+		};
+		const getDetails = new Promise((resolve, reject) => {
+			if (someAPIRequest.success) {
+				resolve(someAPIRequest.data);
+			} else {
+				reject(new Error('API Request Failed. Try again.'));
+			}
+		});
+
+		// Usage:
+		getDetails
+			.then((done) => {
+				console.log('done:', done);
+			})
+			.catch((err) => {
+				console.log('err:', err);
+			});
+
+    </script>
+
+</body>
+</html>

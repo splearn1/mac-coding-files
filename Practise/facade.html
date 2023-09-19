@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	
+	<script>
+
+		// Facade Pattern Demo Start \\
+		class CPU {
+			freeze() {
+				// Code here
+			}
+			jump(position) {
+				// Code here
+			}
+			execute() {
+				// Code here
+			}
+		}
+
+		class Memory {
+			load(pos, data) {
+				// Code Here
+			}
+		}
+
+		class HardDrive {
+			read(lba, size) {
+				// Code Here
+			}
+		}
+
+		class ComputerFacade {
+			constructor() {
+				this.processor = new CPU();
+				this.ram = new Memory();
+				this.hd = new HardDrive();
+			}
+
+			start() {
+				this.processor.freeze();
+				console.log('Processor Freeze Success');
+				this.ram.load(this.BOOT_ADDRESS, this.hd.read(this.BOOT_SECTOR, this.SECTOR_SIZE));
+				console.log('Ram Load Success');
+				this.processor.jump(this.BOOT_ADDRESS);
+				console.log('Processor Jump Success');
+				// . . .
+				this.processor.execute();
+				console.log('Processor Execute Success');
+			}
+		}
+
+		// Usage:
+		console.groupCollapsed('Facade Pattern');
+		let computer = new ComputerFacade();
+		computer.start();
+		console.groupEnd();
+		// Facade Pattern Demo End \\
+
+	</script>
+
+
+</body>
+</html>

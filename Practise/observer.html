@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <textarea id="blogPost" placeholder="Enter your blog post..." class="blogPost"></textarea>
+    
+    <script>
+
+		// Observer Pattern Demo Start \\
+		class EventObserver {
+			constructor() {
+				this.observers = [];
+			}
+
+			subscribe(fn) {
+				this.observers.push(fn);
+			}
+
+			unsubscribe(fn) {
+				this.observers = this.observers.filter((sub) => sub !== fn);
+			}
+
+			broadcast(data) {
+				this.observers.forEach((sub) => sub(data));
+			}
+		}
+
+		// Usage:
+		const getWordCount = (text) => (text ? text.trim().split(/\s+/).length : 0);
+
+		const wordCountElement = document.createElement('p');
+
+		wordCountElement.className = 'wordCount';
+		wordCountElement.innerHTML = 'Word Count: <strong id="blogWordCount">0</strong>';
+		document.body.appendChild(wordCountElement);
+
+		const blogObserver = new EventObserver();
+
+		blogObserver.subscribe((text) => {
+			const blogCount = document.getElementById('blogWordCount');
+
+			blogCount.textContent = getWordCount(text);
+		});
+
+		const blogPost = document.getElementById('blogPost');
+
+		blogPost.addEventListener('keyup', () => blogObserver.broadcast(blogPost.value));
+		// Observer Pattern Demo End \\
+
+    </script>
+
+</body>
+</html>
